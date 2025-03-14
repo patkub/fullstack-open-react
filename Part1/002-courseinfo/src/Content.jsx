@@ -1,21 +1,15 @@
 
-// import './Content.css'
+import Part from './Part.jsx'
 
-const Content = (parts) => {
+const Content = ({props}) => {
+    console.log(props)
     return(
         <>
-            <p>
-                {parts[0].name} {parts[0].exercises}
-            </p>
-            <p>
-                {parts[1].name} {parts[1].exercises}
-            </p>
-            <p>
-                {parts[2].name} {parts[2].exercises}
-            </p>
+            <Part part={props.part1} exercises={props.exercises1}></Part>
+            <Part part={props.part2} exercises={props.exercises2}></Part>
+            <Part part={props.part3} exercises={props.exercises3}></Part>
         </>
     )
-  }
+}
   
-  export default Content
-  
+export default Content

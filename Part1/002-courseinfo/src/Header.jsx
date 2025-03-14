@@ -1,6 +1,4 @@
 
-// import './Header.css'
-
 const Header = (props) => {
   console.log(props)
   return (

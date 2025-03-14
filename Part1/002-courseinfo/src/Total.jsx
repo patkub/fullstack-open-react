@@ -1,15 +1,10 @@
 
-// import './Total.css'
-
-const Total = (parts) => {
-    const total = parts[0].exercises + parts[1].exercises + parts[2].exercises;
-
+const Total = (props) => {
     return(
         <>
-            <p>Number of exercises {total}</p>
+            <p>Number of exercises {props.total}</p>
         </>
     )
-  }
+}
   
-  export default Total
-  
+export default Total
