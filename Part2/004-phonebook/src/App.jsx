@@ -17,16 +17,22 @@ const App = () => {
     { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ])
 
+  const [filterName, setFilterName] = useState('');
+
+  const filteredPersons = persons.filter(person =>
+    person.name.toLowerCase().includes(filterName.toLowerCase())
+  );
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter></Filter>
+      <Filter filterName={filterName} setFilterName={setFilterName}></Filter>
 
       <h2>add a new</h2>
       <PersonForm persons={persons} setPersons={setPersons}></PersonForm>
       
       <h2>Numbers</h2>
-      <Persons persons={persons}></Persons>
+      <Persons persons={filteredPersons}></Persons>
     </div>
   )
 }

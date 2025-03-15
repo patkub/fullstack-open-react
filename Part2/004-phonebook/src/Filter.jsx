@@ -1,7 +1,17 @@
-const Filter = (props) => {
+// filterName state is passed from parent App
+
+const Filter = ({ filterName, setFilterName }) => {
+    
+    const handleFilterChange = (event) => {
+        setFilterName(event.target.value);
+    };
+
     return (
         <>
-            <p>TODO: filter</p>
+            <div>
+                Filter names shown with:
+                <input value={filterName} onChange={handleFilterChange} />
+            </div>
         </>
     )
 }
