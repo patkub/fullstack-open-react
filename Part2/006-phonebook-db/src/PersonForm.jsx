@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const PersonForm = ({persons, setPersons}) => {
+const PersonForm = ({persons, addPerson}) => {
     const [newName, setNewName] = useState('')
     const [newPhoneNumber, setNewPhoneNumber] = useState('')
 
@@ -20,10 +20,10 @@ const PersonForm = ({persons, setPersons}) => {
           name: newName,
           number: newPhoneNumber
         }
-        // add to persons array
-        setPersons(persons.concat(newNameObject))
-        console.log(persons);
-      }
+
+        // add person to database
+        addPerson(newNameObject);
+    }
 
     const handleNameChange = (event) => {
         setNewName(event.target.value);
