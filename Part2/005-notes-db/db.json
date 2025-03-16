@@ -17,18 +17,8 @@
     },
     {
       "id": "4",
-      "content": "222",
+      "content": "POST is used to add data",
       "important": false
-    },
-    {
-      "id": "5",
-      "content": "rsdf",
-      "important": false
-    },
-    {
-      "id": "7",
-      "content": "test",
-      "important": true
     }
   ]
 }
