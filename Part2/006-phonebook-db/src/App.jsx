@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Filter from "./Filter.jsx"
 import PersonForm from "./PersonForm.jsx"
 import Persons from "./Persons.jsx"
+import Notification from './Notification.jsx'
 
 import personsService from './services/persons.js'
 
@@ -20,6 +21,7 @@ const App = () => {
   // ])
 
   const [persons, setPersons] = useState([])
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     console.log('effect')
@@ -46,6 +48,17 @@ const App = () => {
         console.log('getAll after delete promise fulfilled')
         setPersons(persons);
       })
+    }).catch(error => {
+      const alreadyDeletedPerson = persons.filter(n => n.id === id);
+      if (alreadyDeletedPerson && alreadyDeletedPerson.length >= 1) {
+        setErrorMessage(
+          `Information of '${alreadyDeletedPerson[0].name}' has already been removed from server`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      }
+      setPersons(persons.filter(n => n.id !== id))
     })
   }
 
@@ -67,6 +80,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Filter filterName={filterName} setFilterName={setFilterName}></Filter>
 
       <h2>add a new</h2>
