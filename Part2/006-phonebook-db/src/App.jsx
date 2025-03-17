@@ -21,7 +21,8 @@ const App = () => {
   // ])
 
   const [persons, setPersons] = useState([])
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [notificationMessage, setNotificationMessage] = useState(null)
+  const [messageType, setMessageType] = useState(null)
 
   useEffect(() => {
     console.log('effect')
@@ -38,6 +39,16 @@ const App = () => {
     person.name.toLowerCase().includes(filterName.toLowerCase())
   );
 
+  function showSuccessMessage(msg) {
+    setNotificationMessage(msg)
+    setMessageType("success")
+  }
+
+  function showErrorMessage(msg) {
+    setNotificationMessage(msg)
+    setMessageType("error")
+  }
+
   function handleDelete(e, id) {
     e.preventDefault();
     console.log(`deleting by id: ${id}`)
@@ -47,15 +58,23 @@ const App = () => {
       personsService.getAll().then((persons) => {
         console.log('getAll after delete promise fulfilled')
         setPersons(persons);
+
+        // success notification
+        showSuccessMessage(
+          `'${deleteResult.name}' has been removed to server`
+        )
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
       })
     }).catch(error => {
       const alreadyDeletedPerson = persons.filter(n => n.id === id);
       if (alreadyDeletedPerson && alreadyDeletedPerson.length >= 1) {
-        setErrorMessage(
+        showErrorMessage(
           `Information of '${alreadyDeletedPerson[0].name}' has already been removed from server`
         )
         setTimeout(() => {
-          setErrorMessage(null)
+          setNotificationMessage(null)
         }, 5000)
       }
       setPersons(persons.filter(n => n.id !== id))
@@ -69,6 +88,14 @@ const App = () => {
       .then(returnedPerson => {
         console.log(`adding ${JSON.stringify(returnedPerson)} to list of people`)
         setPersons(persons.concat(returnedPerson));
+
+        // success notification
+        showSuccessMessage(
+          `'${returnedPerson.name}' has been added to server`
+        )
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
       })
       .catch(error => {
         alert(
@@ -80,7 +107,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={errorMessage} />
+      <Notification message={notificationMessage} type={messageType} />
       <Filter filterName={filterName} setFilterName={setFilterName}></Filter>
 
       <h2>add a new</h2>
