@@ -6,44 +6,45 @@ app.use(express.json())
 // Morgan logger: https://github.com/expressjs/morgan
 const morgan = require('morgan')
 // custom Morgan token to display POST request body
-morgan.token('body', function (req, res) { return JSON.stringify(req.body) })
+morgan.token('body', function (req) { return JSON.stringify(req.body) })
 // app.use(morgan('tiny'));
 // use custom Mogran token string
 app.use(morgan(':method :url :status :res[content-length] :response-time ms :body'))
 
 
 // Custom logger middleware
+// eslint-disable-next-line no-unused-vars
 const requestLogger = (request, response, next) => {
-    console.log('Method:', request.method)
-    console.log('Path:  ', request.path)
-    console.log('Body:  ', request.body)
-    console.log('---')
-    next()
+  console.log('Method:', request.method)
+  console.log('Path:  ', request.path)
+  console.log('Body:  ', request.body)
+  console.log('---')
+  next()
 }
 // use middleware
 // app.use(requestLogger)
 
 let persons = [
-    { 
-        "id": "1",
-        "name": "Arto Hellas",
-        "number": "040-123456"
-    },
-    { 
-        "id": "2",
-        "name": "Ada Lovelace",
-        "number": "39-44-5323523"
-    },
-    { 
-        "id": "3",
-        "name": "Dan Abramov",
-        "number": "12-43-234345"
-    },
-    { 
-        "id": "4",
-        "name": "Mary Poppendieck",
-        "number": "39-23-6423122"
-    }
+  {
+    'id': '1',
+    'name': 'Arto Hellas',
+    'number': '040-123456'
+  },
+  {
+    'id': '2',
+    'name': 'Ada Lovelace',
+    'number': '39-44-5323523'
+  },
+  {
+    'id': '3',
+    'name': 'Dan Abramov',
+    'number': '12-43-234345'
+  },
+  {
+    'id': '4',
+    'name': 'Mary Poppendieck',
+    'number': '39-23-6423122'
+  }
 ]
 
 app.get('/', (request, response) => {
@@ -90,7 +91,7 @@ app.post('/api/persons', (request, response) => {
 
   if (persons.find(person => person.name === body.name)) {
     return response.status(400).json({
-        error: 'name must be unique'
+      error: 'name must be unique'
     })
   }
 
