@@ -2,9 +2,15 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
+
 // Morgan logger: https://github.com/expressjs/morgan
 const morgan = require('morgan')
-app.use(morgan('tiny'));
+// custom Morgan token to display POST request body
+morgan.token('body', function (req, res) { return JSON.stringify(req.body) })
+// app.use(morgan('tiny'));
+// use custom Mogran token string
+app.use(morgan(':method :url :status :res[content-length] :response-time ms :body'))
+
 
 // Custom logger middleware
 const requestLogger = (request, response, next) => {
@@ -15,7 +21,7 @@ const requestLogger = (request, response, next) => {
     next()
 }
 // use middleware
-app.use(requestLogger)
+// app.use(requestLogger)
 
 let persons = [
     { 
@@ -99,11 +105,10 @@ app.post('/api/persons', (request, response) => {
   response.json(person)
 })
 
-// unknown
+// Unknown endpoints
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
-
 app.use(unknownEndpoint)
 
 const PORT = 3001
