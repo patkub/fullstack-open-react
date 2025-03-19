@@ -16,4 +16,7 @@ content-type: application/json
   "number": "1-800-333-4444"
 }
 
+### Unknown endpoint middleware
+GET http://localhost:3001/api/notfound
+
 ###

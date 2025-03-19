@@ -2,7 +2,11 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
-// middleware
+// Morgan logger: https://github.com/expressjs/morgan
+const morgan = require('morgan')
+app.use(morgan('tiny'));
+
+// Custom logger middleware
 const requestLogger = (request, response, next) => {
     console.log('Method:', request.method)
     console.log('Path:  ', request.path)
